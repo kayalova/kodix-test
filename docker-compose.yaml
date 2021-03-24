@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  kodix-mongodb:
+    image: mongo
+    container_name: 'kodix-mongodb'
+    ports: 
+        - '27517:27017'
+    volumes: 
+        - /mongo-data:/data/db
