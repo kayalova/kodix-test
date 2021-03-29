@@ -10,4 +10,5 @@ require (
 	github.com/joho/godotenv v1.3.0
 	github.com/oleiade/reflections v1.0.1 // indirect
 	github.com/smartystreets/goconvey v1.6.4 // indirect
+	go.mongodb.org/mongo-driver v1.5.0
 )

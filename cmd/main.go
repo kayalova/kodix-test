@@ -6,6 +6,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/kayalova/kodix-test/config"
+	router "github.com/kayalova/kodix-test/controller"
 )
 
 func init() {
@@ -17,7 +18,7 @@ func init() {
 }
 
 func main() {
-	// port, _ := config.GetEnv("APP_PORT")
-	config.GetEnv("APP_PORT")
-	config.GetDbConnection()
+	port, _ := config.GetEnv("APP_PORT")
+
+	router.Run(port)
 }

@@ -1,11 +1,13 @@
 package config
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"os"
 
-	"github.com/goonode/mogo"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 // GetEnv returns env variable and error
@@ -19,24 +21,18 @@ func GetEnv(key string) (string, error) {
 }
 
 // GetDbConnection returns mongo connection
-func GetDbConnection() *mogo.Connection {
-	dbUri, err := GetEnv("MONGODB_URI")
+func GetDbConnection() *mongo.Client {
+	mongoURI, err := GetEnv("MONGO_URI")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	clientOptions := options.Client().ApplyURI(mongoURI)
+	client, err := mongo.Connect(context.TODO(), clientOptions)
 
 	if err != nil {
-		log.Fatal("Can not connect to db: ", err)
+		log.Fatal(err)
 	}
 
-	const database = "kodix-cars"
-	config := &mogo.Config{
-		ConnectionString: dbUri,
-		Database:         database,
-	}
-
-	connection, err := mogo.Connect(config)
-
-	if err != nil {
-		log.Fatal("Can not connect to db: ", err)
-	}
-
-	return connection
+	return client
 }
